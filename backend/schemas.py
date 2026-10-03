@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import List, Optional
-from datetime import date
+from datetime import date as dt_date, datetime as dt_datetime
 
 
 class Ratings(BaseModel):
@@ -15,7 +15,7 @@ class Ratings(BaseModel):
 class SurveyCreate(BaseModel):
     gardenerName: str
     services: List[str]
-    date: Optional[date] = None
+    date: Optional[dt_date] = None
     ratings: Ratings
     nps: Optional[int] = None
     hireAgain: str
@@ -25,6 +25,7 @@ class SurveyCreate(BaseModel):
 
 class SurveyResponse(SurveyCreate):
     id: int
+    created_at: dt_datetime
 
     class Config:
         from_attributes = True

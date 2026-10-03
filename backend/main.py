@@ -10,8 +10,8 @@ app = FastAPI(title="Green Survey API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -39,7 +39,25 @@ def create_survey(survey: schemas.SurveyCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_survey)
 
-    return db_survey
+    return {
+        "id": db_survey.id,
+        "gardenerName": db_survey.gardener_name,
+        "services": db_survey.services,
+        "date": db_survey.date,
+        "ratings": {
+            "punctuality": db_survey.rating_punctuality,
+            "quality": db_survey.rating_quality,
+            "cleanliness": db_survey.rating_cleanliness,
+            "care": db_survey.rating_care,
+            "communication": db_survey.rating_communication,
+            "valueForMoney": db_survey.rating_value_for_money,
+        },
+        "nps": db_survey.nps,
+        "hireAgain": db_survey.hire_again,
+        "improvements": db_survey.improvements,
+        "contact": db_survey.contact,
+        "created_at": db_survey.created_at,
+    }
 
 
 @app.get("/surveys/", response_model=list[schemas.SurveyResponse])
@@ -66,6 +84,7 @@ def get_surveys(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
                 "hireAgain": s.hire_again,
                 "improvements": s.improvements,
                 "contact": s.contact,
+                "created_at": s.created_at,
             }
         )
     return result

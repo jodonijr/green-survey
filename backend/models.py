@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, Date, Text, JSON
+from sqlalchemy import Column, Integer, String, Date, Text, JSON, DateTime
+from sqlalchemy.sql import func
 from database import Base
 
 
@@ -19,3 +20,4 @@ class Survey(Base):
     hire_again = Column(String)
     improvements = Column(Text, nullable=True)
     contact = Column(String, nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
