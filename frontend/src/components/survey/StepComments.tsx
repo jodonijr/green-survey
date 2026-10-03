@@ -3,9 +3,18 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
+import { Loader2 } from "lucide-react"
 import type { SurveyStepProps } from "@/types/survey"
 
-export function StepComments({ data, updateData }: SurveyStepProps) {
+interface StepCommentsProps extends SurveyStepProps {
+  isSubmitting?: boolean
+}
+
+export function StepComments({
+  data,
+  updateData,
+  isSubmitting,
+}: StepCommentsProps) {
   return (
     <Card className="border-zinc-200 bg-white text-zinc-900 shadow-sm">
       <CardHeader>
@@ -41,10 +50,13 @@ export function StepComments({ data, updateData }: SurveyStepProps) {
 
         <div className="pt-4">
           <Button
+            type="submit"
+            disabled={isSubmitting}
             size="lg"
-            className="h-14 w-full bg-green-600 text-lg text-white hover:bg-green-700"
+            className="h-14 w-full bg-green-600 text-lg text-white hover:bg-green-700 disabled:opacity-70"
           >
-            Enviar avaliação
+            {isSubmitting && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
+            {isSubmitting ? "Enviando..." : "Enviar avaliação"}
           </Button>
         </div>
       </CardContent>
