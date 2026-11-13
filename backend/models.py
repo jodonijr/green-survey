@@ -1,6 +1,6 @@
-from sqlalchemy import Column, Integer, String, Date, Text, JSON, DateTime
-from sqlalchemy.sql import func
 from database import Base
+from sqlalchemy import JSON, Column, Date, DateTime, Integer, String, Text
+from sqlalchemy.sql import func
 
 
 class Survey(Base):

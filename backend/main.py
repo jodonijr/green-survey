@@ -1,8 +1,9 @@
-from fastapi import FastAPI, Depends
+import models
+import schemas
+from database import engine, get_db
+from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
-import models, schemas
-from database import engine, get_db
 
 models.Base.metadata.create_all(bind=engine)
 
