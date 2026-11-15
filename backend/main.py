@@ -1,4 +1,5 @@
 import models
+import os
 import schemas
 from database import engine, get_db
 from fastapi import Depends, FastAPI
@@ -9,10 +10,14 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Green Survey API")
 
+raw_origins = os.getenv("ALLOWED_ORIGINS")
+allowed_origins = [origin.strip() for origin in raw_origins.split(",") if origin.strip()]
+print(allowed_origins)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=False,
+    allow_origins=allowed_origins,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
