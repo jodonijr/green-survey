@@ -10,7 +10,7 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Green Survey API")
 
-raw_origins = os.getenv("ALLOWED_ORIGINS")
+raw_origins = os.getenv("ALLOWED_ORIGINS", "http://127.0.0.1")
 allowed_origins = [origin.strip() for origin in raw_origins.split(",") if origin.strip()]
 print(allowed_origins)
 
