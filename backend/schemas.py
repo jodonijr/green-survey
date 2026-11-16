@@ -1,6 +1,6 @@
 from pydantic import BaseModel
-from typing import List, Optional
 from datetime import date as dt_date, datetime as dt_datetime
+from typing import List, Optional
 
 
 class Ratings(BaseModel):
