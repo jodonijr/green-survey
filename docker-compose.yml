@@ -1,0 +1,22 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      # tentativa de carregar do .env
+      #- ALLOWED_ORIGINS={ALLOWED_ORIGINS:-http://localhost:5173}
+      - ALLOWED_ORIGINS=https://cautious-sniffle-ggwrqgqr5973599-5173.app.github.dev
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # tentativa de carregar do .env
+        #- VITE_API_URL=${VITE_API_URL:-http://localhost:8000}
+        - VITE_API_URL=https://cautious-sniffle-ggwrqgqr5973599-8000.app.github.dev
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
